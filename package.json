@@ -17,6 +17,7 @@
     "gamedig": "github:sonicsnes/node-gamedig",
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
-    "php-transpiler": "^0.4.0"
+    "php-transpiler": "^0.4.0",
+    "promise-mysql": "^3.3.1"
   }
 }
