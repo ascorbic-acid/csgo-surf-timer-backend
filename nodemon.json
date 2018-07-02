@@ -1,8 +1,0 @@
-{
-    "env": {
-        "BASE_API": "api",
-        "MONGODB_HOST": "mongodb://localhost/spdb",
-        "SERVER_PORT": 3000,
-        "JWT_KEY": "Dv@#w3cwc3rw3acvAW#V%a4w%ae4"
-    }
-}

@@ -1,3 +1,2 @@
-csgo surf timer frontend app build for F.O.G Community https://f-o-g.eu 
-using nodejs expressjs mysql.
+csgo surf timer frontend app build using nodejs expressjs mysql.
 

@@ -2,12 +2,12 @@
   "name": "timer-backend",
   "version": "1.0.0",
   "description": "backend for surf timer",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Abdou Imad",
+  "author": "Vitamin-C",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -16,8 +16,6 @@
     "express": "^4.16.3",
     "gamedig": "github:sonicsnes/node-gamedig",
     "morgan": "^1.9.0",
-    "mysql": "^2.15.0",
-    "php-transpiler": "^0.4.0",
-    "promise-mysql": "^3.3.1"
+    "mysql": "^2.15.0"
   }
 }

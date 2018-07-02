@@ -6,10 +6,7 @@ const cors = require('cors');
 require('dotenv').load();
 const dashboardController = require('./controllers/dashboard-controller');
 const statusController = require('./controllers/status-controller');
-
-// initialize the php parser factory class
-var engine = require('php-parser');
-var transpiler = require('php-transpiler');
+const maptopController = require('./controllers/maptop-controller');
 
 app.use(morgan('dev'))
 app.use(cors());
@@ -19,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: true}));
   
 app.use(`/${process.env.BASE_API}/dashboard`, dashboardController);
 app.use(`/${process.env.BASE_API}/status`, statusController);
-
+app.use(`/${process.env.BASE_API}/maptop`, maptopController);
 
 app.get(`/${process.env.BASE_API}`, (req, res, next) => {
     res.json({message: 'welcome to timer api'})

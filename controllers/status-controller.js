@@ -10,7 +10,7 @@ const serversList = ['176.57.141.141:27515', '176.57.128.36:27025',
 
 
 // Update the servers info once every 30 second
-setInterval(query_server, QUERY_INTERVAL);
+setInterval(query_server, process.env.UPDATE_INTERVAL || 30000);
 
 statusController.get('/', (req, res, next) => {
 	res.json(serversInfo);
