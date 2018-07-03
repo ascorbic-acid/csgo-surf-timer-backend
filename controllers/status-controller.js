@@ -4,6 +4,7 @@ const Gamedig = require('gamedig');
 // delay time for each server
 const UPDATE_INTERVAL = 30000;
 let gLoopCounter = 0
+let tmp = [];
 let serversInfo = [];
 const serversList = [
 	'176.57.141.141:27515', '176.57.128.36:27025',
@@ -23,18 +24,20 @@ function query_server() {
 		host: serversList[gLoopCounter].split(':')[0],
 		port: serversList[gLoopCounter].split(':')[1]
 	}).then((state) => {
-		serversInfo.push({
+		tmp[gLoopCounter] = {
 			serverName: state.name,
 			serverIP: serversList[gLoopCounter],
 			serverMap: state.map,
 			serverOnlinePlayers: state.players.length,
 			serverMaxPlayers: state.maxplayers
-		});
+		};
 	}).catch((err) => { console.log('error at query server'); throw err })
 
 	if(gLoopCounter == serversList.length - 1){
 		gLoopCounter = 0;
-		serversInfo = [];
+		serversInfo = tmp
+		tmp = [];
+		
 		return 0;
 	}
 	gLoopCounter++
