@@ -2,14 +2,15 @@ const statusController = require('express').Router();
 const Gamedig = require('gamedig');
 
 // delay time for each server
-const QUERY_INTERVAL = 30000;
+const UPDATE_INTERVAL = 30000;
 let gLoopCounter = 0
 let serversInfo = [];
-const serversList = ['176.57.141.141:27515', '176.57.128.36:27025',
+const serversList = [
+	'176.57.141.141:27515', '176.57.128.36:27025',
 	'176.57.128.36:27035', '176.57.141.141:27535'];
 
 
-// Update the servers info once every 30 second
+// Update the servers info once every 30 second 
 setInterval(query_server, process.env.UPDATE_INTERVAL || 30000);
 
 statusController.get('/', (req, res, next) => {
@@ -29,7 +30,7 @@ function query_server() {
 			serverOnlinePlayers: state.players.length,
 			serverMaxPlayers: state.maxplayers
 		});
-	}).catch((err) => { throw err })
+	}).catch((err) => { console.log('error at query server'); throw err })
 
 	if(gLoopCounter == serversList.length - 1){
 		gLoopCounter = 0;

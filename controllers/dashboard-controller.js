@@ -53,77 +53,25 @@ dashboardController.get('/new-maps', (req, res) => {
 // top info cards
 dashboardController.get('/infocards', (req, res) => {
 
-    let sql = "SELECT COUNT(*) FROM `round`";
+    let sqlCards = `SELECT COUNT(*) FROM ranks; SELECT COUNT(*) FROM round; SELECT SUM(points) FROM ranks WHERE points > 0; SELECT AVG(points) FROM ranks WHERE points > 100; SELECT COUNT(*) FROM mapzone WHERE type = 0; SELECT COUNT(*) FROM mapzone WHERE type = 7;`;
 
-    switch (req.query.cardtype){
-        case 'topworldrecord': {
-            let total_records_sql = "SELECT COUNT(*) FROM round";
-            let total_players_sql = "SELECT COUNT(*) FROM ranks";
-
-            let jsonRes = {};
-
-            queryDb(total_records_sql).then(function(results){
-                jsonRes.total_records = results[0]['COUNT(*)'];
-
-                let db = queryDb(total_players_sql).then(function(results){
-                    jsonRes.total_players = results[0]['COUNT(*)'];
-                    res.json(jsonRes)
-                })
-            }).catch((err) => {
-                throw err;
-            })
-            break;
-        }
-        case 'toppoints': {
-            let total_point_sql = "SELECT SUM(`points`) FROM `ranks` WHERE `points` > 0";
-            let total_point_avg_sql = "SELECT AVG(`points`) FROM `ranks` WHERE `points` > 100";
-
-            let jsonRes = {};
-
-            queryDb(total_point_sql).then(function(results){
-                jsonRes.total_points = results[0]['SUM(`points`)'];
-                
-                queryDb(total_point_avg_sql).then(function(results){
-                    jsonRes.avg_points = results[0]['AVG(`points`)'];
-                    res.json(jsonRes);
-                })
-                
-            });
-            break;
-        }
-        case 'maptop': {
-            let total_maps_sql = "SELECT COUNT(*) FROM `mapzone` WHERE `type` = 0";
-            let total_bonusmaps_avg_sql = "SELECT COUNT(*) FROM `mapzone` WHERE `type` = 7";
-
-            let jsonRes = {};
-
-            queryDb(total_maps_sql).then(function(results){
-                jsonRes.total_points = results[0]['COUNT(*)'];
-
-                queryDb(total_bonusmaps_avg_sql).then(function(results){
-                    jsonRes.avg_points = results[0]['COUNT(*)'];
-                    res.json(jsonRes);
-                });
-            });
-            break;
-        }
-        default : {
-            res.status(404).json({error: 404, msg: 'query not found'});
-        }
-    }
-    // if( == '') {
-    //     
-
-    //     result = 
-        
-    // } else if {
-        
-    // }
-    
-    //     else {
-    //     console.log('query not found')
-    //     res.status(404).json({error: 404, msg:'wrong query'})
-    // }
+    queryDb(sqlCards).then((stats) => {
+        let thing = {
+            topworldrecord: {
+              total_players: stats[0][0]['COUNT(*)'],
+              total_records: stats[1][0]['COUNT(*)']
+            },
+            toppoints: {
+              total_points: stats[2][0]['SUM(points)'],
+              avg_points: stats[3][0]['AVG(points)']
+            },
+            maptop: { 
+              total_maps: stats[4][0]['COUNT(*)'],
+              total_bonusmaps: stats[5][0]['COUNT(*)']
+            }
+          }
+          res.json(thing)
+    }).catch((err) => {throw err;})
 });
 
 module.exports = dashboardController;

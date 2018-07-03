@@ -1,5 +1,5 @@
 {
-  "name": "timer-backend",
+  "name": "surf-timer-backend",
   "version": "1.0.0",
   "description": "backend for surf timer",
   "main": "server.js",

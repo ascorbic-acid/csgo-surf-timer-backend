@@ -1,11 +1,13 @@
 const mysql = require('mysql');
 
+
 function queryDb(sql) {
 
     return new Promise(function(resolve, reject) {
         // The Promise constructor should catch any errors thrown on
         // this tick. Alternately, try/catch and reject(err) on catch.
-        var connection = mysql.createConnection({
+        var connection = mysql.createPool({
+            connectionLimit: 100,
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
@@ -17,8 +19,9 @@ function queryDb(sql) {
             if (err) {
                 return reject(err);
             }
-            resolve(results);
             connection.end();
+            resolve(results);
+            
         });
     });
 }
